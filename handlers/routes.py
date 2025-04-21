@@ -1,4 +1,13 @@
 from flask import render_template
+from flask import Flask, request, send_from_directory, render_template
+from keras.preprocessing.image import img_to_array, load_img
+from tensorflow.keras.models import load_model
+import numpy as np
+from PIL import Image
+import io
+import os
+import cv2
+import random
 
 def configure_routes(app):
     @app.route("/", methods=["GET"])
@@ -49,6 +58,7 @@ def postprocess(image):
     return Image.fromarray(image)
 
 
+
 @app.route("/predict", methods=["POST", "GET"])
 def predict():
     # Eğer POST ise, yeni resim yüklenmiş demektir
@@ -84,3 +94,4 @@ def predict():
 @app.route('/static/<filename>')
 def send_image(filename):
     return send_from_directory(STATIC_FOLDER, filename)
+
